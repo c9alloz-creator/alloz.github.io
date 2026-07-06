@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1B3050" />
+  <title>Japan 2026 · Family Trip — Osaka → Tokyo</title>
+
+  <!-- Fonts: Japanese-flavored display serif + friendly rounded body.
+       If you're offline, the site gracefully falls back to system fonts. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-top">
+        <div class="crest" aria-hidden="true">旅</div>
+        <div class="header-title">
+          <p class="eyebrow">Family trip · 家族旅行</p>
+          <h1>Japan <span id="trip-year">2026</span></h1>
+          <p class="trip-dates" id="trip-dates">Nov 14 – Nov 28 · Osaka → Tokyo</p>
+        </div>
+        <button id="edit-toggle" class="edit-toggle" type="button" aria-pressed="false">✎ Edit</button>
+      </div>
+
+      <!-- Signature: the trip progress bar is a little Shinkansen line -->
+      <div class="progress-rail" aria-hidden="true">
+        <span class="rail-city">Osaka</span>
+        <div class="rail">
+          <div class="rail-fill" id="rail-fill"></div>
+          <div class="rail-train" id="rail-train">🚅</div>
+        </div>
+        <span class="rail-city">Tokyo</span>
+      </div>
+      <p class="progress-text" id="progress-text">0 / 0 stops stamped</p>
+      <p class="sync-status" id="sync-status" hidden></p>
+    </div>
+  </header>
+
+  <!-- ============ TAB NAVIGATION ============ -->
+  <nav class="tabs" id="tabs" aria-label="Trip sections">
+    <button class="tab-btn active" data-tab="itinerary" type="button">🗾 Itinerary</button>
+    <button class="tab-btn" data-tab="group" type="button">👨‍👩‍👧‍👦 Everyone</button>
+    <button class="tab-btn" data-tab="guys" type="button">🎮 Alloz &amp; Ahmed</button>
+    <button class="tab-btn" data-tab="girls" type="button">🛍️ Beba &amp; Hessa</button>
+    <button class="tab-btn" data-tab="baby" type="button">🧸 Matar</button>
+    <button class="tab-btn" data-tab="backup" type="button">🎒 Backup</button>
+  </nav>
+
+  <!-- Edit-mode helper bar (hidden until Edit is on) -->
+  <div id="edit-bar" class="edit-bar" hidden>
+    <p>✎ <strong>Edit mode is on.</strong> Tap text to retype it · ＋ adds an activity ·
+       🗑 deletes one · 📍 Map sets a Google&nbsp;Maps link · tap a <strong>picture</strong>
+       for a gallery photo or its 🔗 to paste an image link. Everything saves to this browser.</p>
+    <div class="edit-bar-actions">
+      <button id="reset-edits" type="button">Restore original plan</button>
+      <button id="reset-checks" type="button">Clear all checkmarks</button>
+    </div>
+  </div>
+
+  <!-- Hidden picker used when tapping a thumbnail in Edit mode -->
+  <input type="file" id="photo-input" accept="image/*" hidden />
+
+  <!-- ============ MAIN CONTENT (filled in by script.js) ============ -->
+  <main id="app">
+    <section id="tab-itinerary" class="tab-panel active" aria-label="Daily itinerary"></section>
+    <section id="tab-group" class="tab-panel" aria-label="Activities for everyone"></section>
+    <section id="tab-guys" class="tab-panel" aria-label="Alloz and Ahmed"></section>
+    <section id="tab-girls" class="tab-panel" aria-label="Beba and Hessa"></section>
+    <section id="tab-baby" class="tab-panel" aria-label="Matar, age 2"></section>
+    <section id="tab-backup" class="tab-panel" aria-label="Free and backup days"></section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="warn-box">
+      <strong>⚠️ Before the trip:</strong> double-check opening hours, closure days
+      (many museums close Mondays), timed tickets, and Japanese public holidays
+      — <strong>Mon Nov 23 is a national holiday</strong> and will be crowded.
+      Autumn-foliage timing shifts a little every year.
+    </div>
+    <p class="footer-note">
+      With family sync ON (see the top of script.js), checkmarks, edits, and photos
+      are shared live across everyone's phones. With sync off, each device keeps
+      its own — like separate stamp rallies. 🚅
+    </p>
+    <p class="footer-sign">Alloz · Beba · Matar · Ahmed · Hessa — いってらっしゃい!</p>
+  </footer>
+
+  <!-- Firebase (family live-sync). Harmless if sync is off in script.js -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

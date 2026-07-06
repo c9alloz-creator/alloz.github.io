@@ -1,0 +1,795 @@
+/* ==========================================================================
+   JAPAN 2026 · FAMILY TRIP — style.css
+   Palette drawn from traditional Japanese colors:
+   ai-iro indigo (structure) · shu vermillion (stamps/accents)
+   washi paper (background) · kincha gold · matcha green · plum
+   ========================================================================== */
+
+:root {
+  /* --- Colors --- */
+  --washi:       #F5F0E4;   /* rice-paper background          */
+  --paper:       #FDFBF4;   /* card surface                   */
+  --line:        #E4DCC6;   /* hairline borders               */
+  --ink:         #27313C;   /* main text                      */
+  --muted:       #75705F;   /* secondary text                 */
+  --indigo:      #29497A;   /* ai-iro — primary               */
+  --indigo-deep: #182A4C;   /* header / nav                   */
+  --shu:         #CE3A41;   /* vermillion — checks & stamps   */
+  --shu-soft:    #F6E2E0;
+  --kincha:      #A97E2F;   /* gold — Osaka                   */
+  --kincha-soft: #F3E9D2;
+  --matcha:      #5F7C3F;   /* green — day trips              */
+  --matcha-soft: #E7ECDA;
+  --plum:        #7B5468;   /* travel days                    */
+  --plum-soft:   #EEE3EA;
+  --sumi:        #211E1B;   /* ink black — Alloz & Ahmed 天    */
+  --rose:        #C25D74;   /* rose — Beba & Hessa dryer       */
+  --rose-soft:   #F7E4E9;
+
+  /* --- Type --- */
+  --font-display: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-body: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", -apple-system,
+               "Segoe UI", sans-serif;
+
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(24, 42, 76, 0.06), 0 6px 18px rgba(24, 42, 76, 0.07);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--washi);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+:focus-visible {
+  outline: 3px solid var(--indigo);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ==========================================================================
+   HEADER — indigo noren with a subtle seigaiha (wave) texture
+   ========================================================================== */
+
+.site-header {
+  position: relative;
+  background: var(--indigo-deep);
+  color: #F4EFE2;
+  padding: 22px 18px 18px;
+  overflow: hidden;
+}
+
+/* seigaiha wave pattern, very quiet */
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 50% 115%, transparent 34%, rgba(255,255,255,0.07) 35%, rgba(255,255,255,0.07) 44%, transparent 45%),
+    radial-gradient(circle at 0% 115%,  transparent 34%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.05) 44%, transparent 45%),
+    radial-gradient(circle at 100% 115%, transparent 34%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.05) 44%, transparent 45%);
+  background-size: 42px 22px;
+  pointer-events: none;
+}
+
+.header-inner {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Family crest circle */
+.crest {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(244, 239, 226, 0.85);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.header-title { flex: 1; min-width: 0; }
+
+.eyebrow {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C9C2AC;
+}
+
+.site-header h1 {
+  margin: 1px 0 2px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+
+.trip-dates { margin: 0; font-size: 13px; color: #D9D2BD; }
+
+.edit-toggle {
+  flex: none;
+  border: 1.5px solid rgba(244, 239, 226, 0.55);
+  background: transparent;
+  color: #F4EFE2;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13.5px;
+  font-weight: 700;
+  transition: background 0.15s ease;
+}
+.edit-toggle:hover { background: rgba(255, 255, 255, 0.1); }
+.edit-toggle[aria-pressed="true"] { background: var(--shu); border-color: var(--shu); }
+
+/* --- Shinkansen progress rail (the site's signature) --- */
+.progress-rail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.rail-city {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #C9C2AC;
+}
+
+.rail {
+  position: relative;
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.rail-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #E8B84B, var(--shu));
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rail-train {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -58%);
+  font-size: 20px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
+  transition: left 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.progress-text {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: #C9C2AC;
+}
+
+/* ==========================================================================
+   TABS
+   ========================================================================== */
+
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px 14px;
+  background: rgba(245, 240, 228, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  flex: none;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 9px 15px;
+  font-size: 13.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.tab-btn.active {
+  background: var(--indigo);
+  border-color: var(--indigo);
+  color: #FDFBF4;
+}
+
+/* ==========================================================================
+   EDIT BAR
+   ========================================================================== */
+
+.edit-bar {
+  max-width: 760px;
+  margin: 14px auto 0;
+  padding: 12px 16px;
+  background: var(--shu-soft);
+  border: 1.5px dashed var(--shu);
+  border-radius: var(--radius);
+  font-size: 13.5px;
+}
+.edit-bar p { margin: 0 0 10px; }
+
+.edit-bar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.edit-bar-actions button {
+  border: 1.5px solid var(--shu);
+  background: var(--paper);
+  color: var(--shu);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.edit-bar-actions button:hover { background: var(--shu); color: #fff; }
+
+body.edit-mode .editable {
+  outline: 2px dashed rgba(206, 58, 65, 0.6);
+  outline-offset: 3px;
+  border-radius: 4px;
+  cursor: text;
+  min-height: 1em;
+}
+
+.edited-dot {
+  display: none;
+  color: var(--shu);
+  font-size: 11px;
+  vertical-align: super;
+}
+.is-edited .edited-dot { display: inline; }
+
+/* ==========================================================================
+   LAYOUT & PANELS
+   ========================================================================== */
+
+#app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px 14px 40px;
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fade-in 0.3s ease; }
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.panel-intro {
+  margin: 6px 2px 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.panel-title {
+  margin: 10px 2px 4px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+}
+
+/* --- Date jump strip (itinerary) --- */
+.date-strip {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 2px 12px;
+  scrollbar-width: none;
+}
+.date-strip::-webkit-scrollbar { display: none; }
+
+.date-chip {
+  flex: none;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 10px;
+  padding: 6px 10px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.25;
+  color: var(--muted);
+  font-weight: 700;
+}
+.date-chip b { display: block; font-size: 15px; color: var(--ink); }
+.date-chip[data-city="osaka"]  { border-bottom: 3px solid var(--kincha); }
+.date-chip[data-city="tokyo"]  { border-bottom: 3px solid var(--indigo); }
+.date-chip[data-city="travel"] { border-bottom: 3px solid var(--plum); }
+.date-chip[data-city="trip"]   { border-bottom: 3px solid var(--matcha); }
+
+/* ==========================================================================
+   DAY CARDS
+   ========================================================================== */
+
+.day-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 18px;
+  overflow: hidden;
+  scroll-margin-top: 70px; /* room for the sticky tabs when jumping */
+}
+
+.day-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.day-date {
+  flex: none;
+  text-align: center;
+  min-width: 44px;
+}
+.day-date .dow {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.day-date .num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--indigo);
+}
+
+.day-titles { flex: 1; min-width: 0; }
+.day-titles h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.day-titles .day-sub { margin: 1px 0 0; font-size: 12.5px; color: var(--muted); }
+
+.city-pill {
+  flex: none;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.city-pill[data-city="osaka"]  { background: var(--kincha-soft); color: var(--kincha); }
+.city-pill[data-city="tokyo"]  { background: #E1E7F2; color: var(--indigo); }
+.city-pill[data-city="travel"] { background: var(--plum-soft); color: var(--plum); }
+.city-pill[data-city="trip"]   { background: var(--matcha-soft); color: var(--matcha); }
+
+/* --- Hanko stamp: appears when every stop in a day is checked --- */
+.stamp {
+  position: absolute;
+  right: 14px;
+  bottom: -16px;
+  z-index: 2;
+  width: 46px;
+  height: 46px;
+  border: 2.5px solid var(--shu);
+  border-radius: 50%;
+  display: none;
+  place-items: center;
+  color: var(--shu);
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 800;
+  background: rgba(253, 251, 244, 0.9);
+  box-shadow: inset 0 0 0 2px rgba(253, 251, 244, 0.9), inset 0 0 0 3.5px var(--shu);
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+.day-card.complete .stamp {
+  display: grid;
+  animation: stamp-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes stamp-in {
+  from { transform: rotate(-12deg) scale(1.6); opacity: 0; }
+  to   { transform: rotate(-12deg) scale(1);   opacity: 1; }
+}
+
+/* ==========================================================================
+   ACTIVITIES
+   ========================================================================== */
+
+.activity {
+  display: flex;
+  gap: 12px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.activity:last-of-type { border-bottom: none; }
+
+/* stamp-style checkbox */
+.check {
+  flex: none;
+  width: 27px;
+  height: 27px;
+  margin-top: 2px;
+  border-radius: 50%;
+  border: 2px solid #C6BDA2;
+  background: transparent;
+  color: transparent;
+  font-size: 14px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.check:hover { border-color: var(--shu); }
+.check[aria-pressed="true"] {
+  background: var(--shu);
+  border-color: var(--shu);
+  color: #fff;
+  transform: rotate(-8deg);
+}
+
+/* — Alloz & Ahmed: the 天 ("heaven") ink stamp — */
+.check--ten { font-family: var(--font-display); font-size: 13px; font-weight: 800; }
+.check--ten:hover { border-color: var(--sumi); }
+.check--ten[aria-pressed="true"] {
+  background: var(--sumi);
+  border-color: var(--sumi);
+  color: #F5F0E4;
+}
+
+/* — Beba & Hessa: the rose hair-dryer stamp — */
+.check--dryer svg { opacity: 0; transition: opacity 0.15s ease; }
+.check--dryer:hover { border-color: var(--rose); }
+.check--dryer[aria-pressed="true"] {
+  background: var(--rose);
+  border-color: var(--rose);
+  color: #fff;
+}
+.check--dryer[aria-pressed="true"] svg { opacity: 1; }
+
+/* ---- thumbnails: photo if set, postcard tile otherwise ---- */
+.thumb {
+  position: relative;
+  flex: none;
+  width: 58px;
+  height: 58px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(120% 90% at 15% 12%, rgba(255,255,255,0.55), rgba(255,255,255,0) 55%),
+    linear-gradient(150deg, var(--t1, #E9EDF5), var(--t2, #C9D4E8));
+}
+.thumb-icon { font-size: 26px; line-height: 1; filter: drop-shadow(0 1px 1px rgba(24,42,76,0.18)); }
+.thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;                       /* covers the tile; if it fails, tile shows */
+}
+
+/* postcard tones */
+.thumb[data-tone="osaka"]  { --t1: #F3E9D2; --t2: #DFC98F; }
+.thumb[data-tone="tokyo"]  { --t1: #E9EDF5; --t2: #B9C8E4; }
+.thumb[data-tone="trip"]   { --t1: #E7ECDA; --t2: #C2D0A4; }
+.thumb[data-tone="travel"] { --t1: #EEE3EA; --t2: #D3B9C8; }
+.thumb[data-tone="indigo"] { --t1: #E9EDF5; --t2: #B9C8E4; }
+.thumb[data-tone="sumi"]   { --t1: #EAE6E0; --t2: #C2BBB1; }
+.thumb[data-tone="rose"]   { --t1: #F7E4E9; --t2: #E7BCC8; }
+.thumb[data-tone="matcha"] { --t1: #E7ECDA; --t2: #C2D0A4; }
+.thumb[data-tone="plum"]   { --t1: #EEE3EA; --t2: #D3B9C8; }
+
+/* remove-photo badge (only rendered on custom photos) */
+.thumb-x {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(24, 42, 76, 0.75);
+  color: #fff;
+  font-size: 10px;
+  line-height: 1;
+  display: none;
+  place-items: center;
+}
+.edit-mode .thumb-x { display: grid; }
+
+/* in Edit mode thumbnails become tappable photo slots */
+.edit-mode .thumb { cursor: pointer; outline: 2px dashed var(--indigo); outline-offset: 2px; }
+.edit-mode .thumb::after {
+  content: "📷";
+  position: absolute;
+  bottom: 2px;
+  right: 3px;
+  z-index: 2;
+  font-size: 12px;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4));
+}
+
+/* family-sync status line under the progress bar */
+.sync-status {
+  margin: 4px 0 0;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: rgba(253, 251, 244, 0.75);
+  text-align: center;
+}
+
+/* very narrow phones: slightly smaller tiles */
+@media (max-width: 380px) {
+  .thumb { width: 50px; height: 50px; }
+  .thumb-icon { font-size: 22px; }
+}
+
+/* ---- Google Maps button ---- */
+.map-btn {
+  flex: none;
+  margin-left: auto;
+  align-self: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--indigo);
+  background: #E9EDF5;
+  border: 1px solid #C9D4E8;
+  border-radius: 999px;
+  padding: 3px 9px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.map-btn:hover { background: #DDE5F2; border-color: var(--indigo); }
+.activity.checked .map-btn { opacity: 0.55; }
+
+/* ghost Map button — visible only in Edit mode, for attaching a link */
+.map-add { display: none; opacity: 0.55; border-style: dashed; cursor: pointer; }
+.edit-mode .map-add { display: inline-block; }
+.edit-mode .map-btn { cursor: pointer; }
+.edit-mode .map-btn:not(.map-add)::after { content: " ✎"; }
+
+/* set-picture-from-link badge (bottom-left of thumbnail, Edit mode only) */
+.thumb-link {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(24, 42, 76, 0.75);
+  font-size: 9px;
+  line-height: 1;
+  display: none;
+  place-items: center;
+  cursor: pointer;
+}
+.edit-mode .thumb-link { display: grid; }
+
+/* delete-activity button (Edit mode only) */
+.a-del {
+  flex: none;
+  align-self: center;
+  display: none;
+  border: 1px solid #EBC4C2;
+  background: var(--shu-soft);
+  color: var(--shu);
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 7px;
+  cursor: pointer;
+}
+.edit-mode .a-del { display: inline-block; }
+.a-del:hover { background: var(--shu); color: #fff; border-color: var(--shu); }
+
+/* "+ Add an activity" row (Edit mode only) */
+.add-activity {
+  display: none;
+  width: calc(100% - 32px);
+  margin: 10px 16px 12px;
+  padding: 9px 12px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--indigo);
+  background: transparent;
+  border: 2px dashed #C9D4E8;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.edit-mode .add-activity { display: block; }
+.add-activity:hover { background: #E9EDF5; border-color: var(--indigo); }
+
+.a-body { flex: 1; min-width: 0; }
+
+.a-top {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.a-time {
+  flex: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--indigo);
+  background: #E9EDF5;
+  border-radius: 6px;
+  padding: 2px 7px;
+}
+
+.a-title { font-weight: 700; font-size: 15px; }
+
+.a-note {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.a-tags { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 5px; }
+
+.tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--washi);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2.5px 9px;
+  white-space: nowrap;
+}
+.tag.warn { color: var(--shu); background: var(--shu-soft); border-color: #EBC4C2; }
+.tag.book { color: var(--indigo); background: #E7ECF6; border-color: #C9D4E8; }
+
+.activity.checked .a-title,
+.activity.checked .a-note { opacity: 0.45; }
+.activity.checked .thumb { opacity: 0.55; filter: saturate(0.6); }
+.activity.checked .a-title { text-decoration: line-through; text-decoration-thickness: 1.5px; }
+
+/* day footer transit note */
+.day-note {
+  padding: 11px 16px;
+  font-size: 12.5px;
+  color: var(--muted);
+  background: var(--washi);
+  border-top: 1px dashed var(--line);
+}
+
+/* ==========================================================================
+   GUIDE TABS (Everyone / Alloz & Ahmed / Beba & Hessa / Matar / Backup)
+   ========================================================================== */
+
+.guide-section {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.guide-section > h3 {
+  margin: 0;
+  padding: 13px 16px;
+  font-family: var(--font-display);
+  font-size: 16.5px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(0deg, rgba(41, 73, 122, 0.045), rgba(41, 73, 122, 0.045));
+}
+
+.guide-section .activity { align-items: flex-start; }
+
+.hero-note {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--kincha);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.site-footer {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+  text-align: center;
+}
+
+.warn-box {
+  text-align: left;
+  background: #FBF3E1;
+  border: 1.5px solid #E7CE93;
+  border-radius: var(--radius);
+  padding: 13px 16px;
+  font-size: 13.5px;
+  margin-bottom: 18px;
+}
+
+.footer-note { font-size: 12.5px; color: var(--muted); margin: 0 0 8px; }
+
+.footer-sign {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--indigo);
+  margin: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE & MOTION
+   ========================================================================== */
+
+@media (min-width: 640px) {
+  body { font-size: 16px; }
+  .site-header { padding: 30px 24px 22px; }
+  .site-header h1 { font-size: 36px; }
+  #app { padding: 22px 20px 56px; }
+  .day-titles h2 { font-size: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
